@@ -43,10 +43,7 @@ public class P2309 {
                 sum+= heightList.get(i);
             }
         }
-        if(sum==100){
-            return true;
-        }
-        return false;
+        return sum == 100;
     }
 
     private static void selectNoneShortPeople() {
