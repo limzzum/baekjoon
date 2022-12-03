@@ -1,4 +1,4 @@
-import P2309.P2309;
+import etc.P2309.P2309;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
