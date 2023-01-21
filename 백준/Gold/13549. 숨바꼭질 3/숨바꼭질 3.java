@@ -20,17 +20,24 @@ public class Main {
         count = K-N;
         qp.add(new int[]{N,0});
         boolean [] visited = new boolean[100001];
-        while (!qp.isEmpty()){
+              while (!qp.isEmpty()){
             int[] poll = qp.poll();
-            if(poll[0]>=0 && poll[0]<=100000 && !visited[poll[0]]){
-                visited[poll[0]]=true;
-                if(poll[0] >= K){
-                    count = Math.min(count, poll[1] + poll[0] - K);
-                }else{
-                     qp.add(new int[]{poll[0]*2, poll[1]});
-                     qp.add(new int[]{poll[0]-1, poll[1]+1});
-                     qp.add(new int[]{poll[0]+1, poll[1]+1});
-                }                
+            if(poll[0] >= K){
+                count = Math.min(count, poll[1] + poll[0] - K);
+                continue;
+            }else{
+            if(poll[0]*2>=0 && poll[0]*2<=100000 && !visited[poll[0]*2]){
+                qp.add(new int[]{poll[0]*2, poll[1]});
+                visited[poll[0]*2]=true;
+            }
+            if(poll[0] - 1 >= 0 && !visited[poll[0] - 1]){
+                qp.add(new int[]{poll[0]-1, poll[1]+1});
+                visited[poll[0]-1]=true;
+            }
+            if(poll[0]+1<=100000 && !visited[poll[0]+1]){
+                qp.add(new int[]{poll[0]+1, poll[1]+1});
+                visited[poll[0]+1]=true;
+            }
             }
         }
         System.out.println(count);
