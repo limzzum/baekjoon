@@ -27,7 +27,7 @@ public class Main {
         if(sum == target && use>0 ){
             count +=1;
         }
-        if(idx>=N){
+        if(idx==N){
             return;
         }
         dfs(idx+1, sum, use=0);
