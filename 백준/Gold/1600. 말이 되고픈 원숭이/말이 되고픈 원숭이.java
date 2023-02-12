@@ -1,5 +1,5 @@
 import java.io.*;
-import java.util.LinkedList;
+import java.util.ArrayDeque;
 import java.util.Queue;
 
 public class Main{
@@ -30,7 +30,7 @@ public class Main{
     }
     public static void main(String [] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        Queue<Node> qp = new LinkedList<>();
+        Queue<Node> qp = new ArrayDeque<>();
 
         int K = Integer.parseInt(br.readLine());
         String[] input = br.readLine().split(" ");
@@ -60,10 +60,10 @@ public class Main{
         qp.add(new Node(0,0,0,K));
         visit[0][0] = 2;
         count[0][0] = answer;
-        
+
         while (!qp.isEmpty()){
             Node node = qp.poll();
-        
+
             if(node.chance>0) {
                 for(int i=0; i<8; i++) {
                     int nexR = node.r+moveDiagonalR[i];
