@@ -18,8 +18,8 @@ public class Main{
             }else{
                 numCntMinus[-n] = 1;
             }
-
         }
+        
         int M = Integer.parseInt(br.readLine());
         String[] compare = br.readLine().split(" ");
 
@@ -32,10 +32,6 @@ public class Main{
                 sb.append(numCntMinus[-num]).append(" ");
             }
         }
-
-
-
-
         System.out.println(sb);
     }
 }
