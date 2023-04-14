@@ -1,9 +1,10 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Queue;
+import java.util.StringTokenizer;
 
 /*
  * 이동할 방향을 입력받아서 저장.
@@ -19,7 +20,7 @@ import java.util.Queue;
  * */
 public class Main {
     static int R,C;
-    static String[][] map;
+    static char[][] map;
     static boolean[][] visited;
     static boolean[][] removed;
     static Queue<Pos> michins = new ArrayDeque<>();
@@ -37,28 +38,30 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String[] input = br.readLine().split(" ");
-        R = Integer.parseInt(input[0]);
-        C = Integer.parseInt(input[1]);
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer tokenizer = new StringTokenizer(br.readLine());
 
-        map = new String[R][C];
+        R = Integer.parseInt(tokenizer.nextToken());
+        C = Integer.parseInt(tokenizer.nextToken());
+
+        map = new char[R][C];
 
         for (int i = 0; i < R; i++) {
-            map[i] = br.readLine().split("");
+            map[i] = br.readLine().toCharArray();
             for (int j = 0; j < C; j++) {
-                if(map[i][j].equals("R")){
+                if(map[i][j] == 'R'){
                     michins.add(new Pos(i,j));
                 }
-                if(map[i][j].equals("I")){
+                if(map[i][j]=='I'){
                     curR = i;
                     curC = j;
                 }
             }
         }
-        input = br.readLine().split("");
+        char[] input = br.readLine().toCharArray();
         int[] move = new int[input.length];
         for (int i = 0; i < move.length; i++) {
-            move[i] = Integer.parseInt(input[i]);
+            move[i] = input[i]-'0';
         }
 
         for (int i = 0; i < move.length; i++) {
@@ -76,20 +79,22 @@ public class Main {
 
         for (int i = 0; i < R; i++) {
             for (int j = 0; j < C; j++) {
-                System.out.print(map[i][j]);
+                bw.write(map[i][j]);
             }
-            System.out.println();
+            bw.write("\n");
         }
+        bw.flush();
+        bw.close();
     }
     private static boolean moveAdino(int dir){
         int nr = curR +row[dir];
         int nc = curC +col[dir];
 
-        if(map[nr][nc].equals("R")){
+        if(map[nr][nc]=='R'){
             return false;
         }
-        map[curR][curC] = ".";
-        map[nr][nc] = "I";
+        map[curR][curC] = '.';
+        map[nr][nc] = 'I';
         curR = nr;
         curC = nc;
         return true;
@@ -108,23 +113,23 @@ public class Main {
             int nr = pos.r + row[mvIdx];
             int nc = pos.c + col[mvIdx];
 
-            if (map[nr][nc].equals("I")) {
+            if (map[nr][nc] =='I') {
                 return false;
             }
             if(!visited[pos.r][pos.c]){
-                map[pos.r][pos.c] = ".";
+                map[pos.r][pos.c] = '.';
             }
 
             if (visited[nr][nc]) {
                 if (!removed[nr][nc]) {
                     remove(nr, nc, size-i-1);
                     removed[nr][nc] = true;
-                    map[nr][nc] = ".";
+                    map[nr][nc] = '.';
                 }
                 continue;
             }
 
-            map[nr][nc] = "R";
+            map[nr][nc] = 'R';
             michins.add(new Pos(nr,nc));
             visited[nr][nc] = true;
         }
