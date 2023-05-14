@@ -10,10 +10,7 @@ import java.util.StringTokenizer;
 * -> sum[i] 는 i크기 이하의 물고기 갯수이다.
 * 먹을 수 있는 물고기가 있는지 알고 싶다면 sum[아기상어의 크기-1]- 현재까지 먹은 물고기 수가 1이상인지 확인 해준다.
 *
-*
-*
 * */
-
 public class Main {
     static int N;
     static int[][] map;
@@ -55,10 +52,9 @@ public class Main {
         N = Integer.parseInt(br.readLine());
         map = new int[N][N];
         visited = new boolean[N][N];
-        int[] count = new int[7];
-        int[] sumCnt = new int[7];
+        int[] count = new int[N*N/2+7];
+        int[] sumCnt = new int[N*N/2+7];
 
-//        BabyShark babyShark = null;
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
             for (int j = 0; j < N; j++) {
@@ -73,12 +69,12 @@ public class Main {
             }
         }
 
-        for (int i = 1; i < 7; i++) {
+        for (int i = 1; i < sumCnt.length; i++) {
             sumCnt[i] = count[i]+sumCnt[i-1];
         }
 
 
-        while (sumCnt[Math.min(6,babyShark.size-1)] - babyShark.totalEat >0){
+        while (sumCnt[babyShark.size-1] - babyShark.totalEat >0){
             int result = eat();
             if(result== -1){
                 System.out.println(aliveTime);
