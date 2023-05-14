@@ -11,11 +11,11 @@ import java.util.StringTokenizer;
 * 먹을 수 있는 물고기가 있는지 알고 싶다면 sum[아기상어의 크기-1]- 현재까지 먹은 물고기 수가 1이상인지 확인 해준다.
 *
 * */
+
 public class Main {
     static int N;
     static int[][] map;
     static boolean[][] visited;
-    static BabyShark babyShark;
     static int aliveTime;
     static int[] row = {0, -1, 0, 1};
     static int[] col = {-1, 0, 1, 0};
@@ -32,12 +32,14 @@ public class Main {
         }
     });
 
+    static int size =2;
+    static int eatCnt;
+    static int totalEat;
+    static int curR;
+    static int curC;
     static class BabyShark{
         int r,c;
-        int size =2;
         int time;
-        int eatCnt;
-        int totalEat;
         public BabyShark(int r, int c,int time){
             this.r = r;
             this.c = c;
@@ -60,7 +62,8 @@ public class Main {
             for (int j = 0; j < N; j++) {
                 map[i][j] = Integer.parseInt(st.nextToken());
                 if(map[i][j] == 9){
-                    babyShark = new BabyShark(i,j,0);
+                    curR = i;
+                    curC = j;
                     map[i][j] = 0;
                 }
                 else if(map[i][j]!=0){
@@ -72,19 +75,18 @@ public class Main {
         for (int i = 1; i < sumCnt.length; i++) {
             sumCnt[i] = count[i]+sumCnt[i-1];
         }
-
-
-        while (sumCnt[babyShark.size-1] - babyShark.totalEat >0){
+        
+        while (sumCnt[size-1] - totalEat >0){
             int result = eat();
             if(result== -1){
                 System.out.println(aliveTime);
                 return;
             }
-            babyShark.totalEat += 1;
-            babyShark.eatCnt += 1;
-            if(babyShark.eatCnt == babyShark.size){
-                babyShark.eatCnt = 0;
-                babyShark.size += 1;
+            totalEat += 1;
+            eatCnt += 1;
+            if(eatCnt == size){
+                eatCnt = 0;
+                size += 1;
             }
             aliveTime += result;
         }
@@ -93,15 +95,15 @@ public class Main {
     }
     private static int eat(){
         pq.clear();
-        pq.add(babyShark);
+        pq.add(new BabyShark(curR, curC, 0));
         visited = new boolean[N][N];
-        visited[babyShark.r][babyShark.c] = true;
+        visited[curR][curC] = true;
         while (!pq.isEmpty()){
             BabyShark poll = pq.poll();
-            if(map[poll.r][poll.c] != 0 && map[poll.r][poll.c] < babyShark.size){
+            if(map[poll.r][poll.c] != 0 && map[poll.r][poll.c] < size){
                 map[poll.r][poll.c] = 0;
-                babyShark.r = poll.r;
-                babyShark.c = poll.c;
+                curR = poll.r;
+                curC = poll.c;
 
                 return poll.time;
             }
@@ -113,7 +115,7 @@ public class Main {
                     continue;
                 }
                 visited[nr][nc] = true;
-                if(map[nr][nc]<= babyShark.size){
+                if(map[nr][nc]<= size){
                     pq.add(new BabyShark(nr, nc, poll.time+1));
                 }
             }
