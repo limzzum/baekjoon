@@ -1,5 +1,7 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayDeque;
+import java.util.Queue;
 
 public class Main {
     static int[][] nodes;
@@ -9,6 +11,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        Queue<Integer> queue = new ArrayDeque<>();
         StringBuilder sb = new StringBuilder();
 
         int Tc = Integer.parseInt(br.readLine());
@@ -44,9 +47,27 @@ public class Main {
                     }
                 }
             }
+            queue.add(0);
+            loop : while (!queue.isEmpty()){
+                Integer poll = queue.poll();
+                for (int i = 1; i < canGo.length; i++) {
+                    if(poll == i) continue;
 
-            dfs(0);
+                    if(canGo[poll][i] && !visited[i]){
+                        if(i== N+1){
+                            answer = "happy";
+                            break loop;
+                        }
+                        visited[i] = true;
+                        queue.add(i);
+                    }
+
+                }
+            }
+
+           // dfs(0);
             sb.append(answer).append("\n");
+            queue.clear();
         }
         System.out.println(sb);
     }
