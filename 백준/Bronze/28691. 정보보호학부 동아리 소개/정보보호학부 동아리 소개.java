@@ -6,20 +6,14 @@ import java.util.Map;
 
 public class Main {
 
-    static Map<Character,String> map = Map.of(
-        'M',"MatKor",
-        'W',"WiCys",
-        'C',"CyKor",
-        'A',"AlKor",
-        '$',"$clear");
-//    static HashMap<Character,String> map = new HashMap<>(){{
-//        put('M',"MatKor");
-//        put('W',"WiCys");
-//        put('C',"CyKor");
-//        put('A',"AlKor");
-//        put('$',"$clear");
-//
-//    }};
+    static HashMap<Character,String> map = new HashMap<>(){{
+        put('M',"MatKor");
+        put('W',"WiCys");
+        put('C',"CyKor");
+        put('A',"AlKor");
+        put('$',"$clear");
+
+    }};
     public static void main(String[] args) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
