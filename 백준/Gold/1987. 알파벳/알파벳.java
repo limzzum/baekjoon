@@ -1,40 +1,54 @@
 import java.io.*;
 
-public class Main{
+public class Main {
+
+    static int R, C;
     static int [] row = {0, -1, 0, 1};
-    static int[] col = {-1,0,1,0};
-    static int N;
-    static int M;
-    static String[][] map;
-    static int answer;
-    public static void main(String [] args) throws IOException {
+    static int [] col = {-1, 0, 1, 0};
+    static char[][] map;
+    static boolean[] isVisited = new boolean[30];
+    static int answer = 0;
+
+    public static void main(String[] args) throws Exception{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String[] input = br.readLine().split(" ");
-        N = Integer.parseInt(input[0]);
-        M = Integer.parseInt(input[1]);
 
+        String [] input = br.readLine().split(" ");
+        R = Integer.parseInt(input[0]);
+        C = Integer.parseInt(input[1]);
+        map = new char[R][C];
 
-        map = new String[N][M];
-        for (int i=0; i<N; i++){
-            map[i] = br.readLine().split("");
+        for (int i = 0; i < R; i++) {
+            map[i] = br.readLine().toCharArray();
         }
 
-        dfs(0,0,map[0][0]);
+
+        dfs(0,0,1);
         System.out.println(answer);
 
-    }
-    private static void dfs(int r, int c, String ans){
 
-        for (int i=0; i<4; i++){
-            int nexR = r + row[i];
-            int nexC = c + col[i];
-            if(nexR>=0 && nexR<N && nexC>=0 && nexC <M){
-                if(!ans.contains(map[nexR][nexC])){
-                    dfs(nexR, nexC, ans+map[nexR][nexC]);
-                }else {
-                    answer = Math.max(answer, ans.length());
-                }
+    }
+
+    private static void dfs(int r, int c, int cnt){
+        int index = map[r][c] - 'A';
+
+        isVisited[index] = true;
+        for (int i = 0; i < 4; i++) {
+            int nr = r + row[i];
+            int nc = c + col[i];
+            if(nr < 0 || nr >= R || nc < 0 || nc >= C){
+                answer = Math.max(answer, cnt);
+                continue;
             }
+            int nIndex = map[nr][nc] - 'A';
+            if(isVisited[nIndex]){
+                answer = Math.max(answer, cnt);
+                continue;
+            }
+
+            dfs(nr, nc, cnt+1);
         }
+        isVisited[index] = false;
+
+
     }
 }
