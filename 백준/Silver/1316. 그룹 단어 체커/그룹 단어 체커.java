@@ -9,19 +9,23 @@ public class Main {
 
         int[] numIdx;
         int answer = 0;
-        loop : for (int i = 0; i < N; i++) {
+        boolean isFail;
+        for (int i = 0; i < N; i++) {
             numIdx = new int[27];
+            isFail = false;
             char[] words = br.readLine().toCharArray();
             for (int j = 0; j < words.length; j++) {
                 int word = words[j] - 'a';
                 if(numIdx[word] == 0 || j + 1 - numIdx[word] == 1 ){
                     numIdx[word] = j+1;
                 }else {
-                    continue loop;
+                    isFail = true;
+                    break;
                 }
             }
-            answer += 1;
-
+            if(!isFail){
+                answer += 1;
+            }
         }
         System.out.println(answer);
     }
