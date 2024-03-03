@@ -1,59 +1,46 @@
-import sun.reflect.generics.tree.Tree;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
-import java.util.*;
 
 public class Main {
-
-    public static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    public static StringTokenizer st = null;
-
-
-    public static long n,m;
     public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
 
-        st= new StringTokenizer(br.readLine());
+        String[] input = br.readLine().split(" ");
+        int N = Integer.parseInt(input[0]);
+        int M = Integer.parseInt(input[1]);
 
-        int n = Integer.parseInt(st.nextToken());
-        long m = Long.parseLong(st.nextToken());
+        int[] staffs = new int[N];
+        int max = 0;
+        for(int i=0; i<N; i++){
+            staffs[i] = Integer.parseInt(br.readLine());
+            if(staffs[i]>max){
+                max = staffs[i];
+            }
+        }
 
-         long [] a= new long [n];
+        long maxTime = (long)(M/N+1)*max;
 
-         Arrays.sort(a);
+        long left =1;
+        long right =maxTime;
+        long mid = (left+right)/2;
 
-         long maxNum = Integer.MAX_VALUE;
-         for (int i = 0 ; i< n  ; i ++) {
-             a[i] = Long.parseLong(br.readLine());
-             maxNum = Math.min(maxNum, a[i]);
-         }
-         maxNum = maxNum*m;
-        long start = 0;
-        long end = maxNum;
-         while (start< end) {
-             long mid = (start+end)/2;
-            // System.out.println(mid);
-             //시간 체크 ;
-             long sum = 0;
+        long answer = maxTime;
+        while (left<=right){
+            mid = (left+right)/2;
+            long sum = 0;
+            for (int i=0; i<N; i++){
+                sum += mid/staffs[i];
+            }
 
-             for (int i = 0 ; i< n ; i++) {
-                 sum += mid/a[i];
-             }
-             if (sum >= m) {
-                 // 괜찮음
-                 end = mid;
-             }
-             else {
-                 // 안됨 더 늘려야 함
-                 start = mid+1;
-             }
-         }
-
-         //하한선을 구함
-        System.out.println(start);
+            if(sum>=M){
+                answer = Math.min(answer, mid);
+                right = mid-1;
+            }else {
+                left = mid+1;
+            }
+        }
+        System.out.println(answer);
     }
-
-
 }
