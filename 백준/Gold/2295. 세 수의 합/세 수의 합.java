@@ -1,17 +1,13 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Main {
 
     static int N;
     static List<Integer> nums = new ArrayList<>();
     static int answer;
-    static int max;
-    static Map<Integer, Boolean> isInNums = new HashMap<>();
 
     public static void main(String[] args) throws Exception{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -20,8 +16,6 @@ public class Main {
         for (int i = 0; i < N; i++) {
             int num = Integer.parseInt(br.readLine());
             nums.add(num);
-            max = Math.max(max, num);
-            isInNums.put(num, true);
         }
         nums.sort((a,b)-> b-a);
 
@@ -42,10 +36,7 @@ public class Main {
         }
 
         if(n == 3){
-            if(sum == target){
-                return true;
-            }
-            return false;
+            return sum == target;
         }
 
         for (int i = start; i < N; i++) {
