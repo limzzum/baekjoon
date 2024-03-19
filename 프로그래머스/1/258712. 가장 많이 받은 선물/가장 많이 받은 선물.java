@@ -34,21 +34,11 @@ class Solution {
             map.get(to).put(from, map.get(to).get(from) - 1);
 
         }
-        int[] cnt = {0};
-        map.forEach((key, value)->{
-            cnt[0] = 0;
-            value.forEach((k, v)->{
-                if(v > 0){
-                    cnt[0] += 1;
-                }else if( v == 0){
-                    if(score.getOrDefault(key, 0)> score.getOrDefault(k,0)){
-                        cnt[0] += 1;
-                    }
-                }
-            });
-                answer = Math.max(answer, cnt[0]);
-        });
         
+        answer = map.entrySet().stream().mapToInt(entry -> {
+        return (int) entry.getValue().entrySet().stream().filter(e-> e.getValue() > 0 || (e.getValue() == 0 && score.getOrDefault(entry.getKey(),0) > score.getOrDefault(e.getKey(), 0))).count();
+    }).max().orElse(0);
+
         return answer;
     }
 }
