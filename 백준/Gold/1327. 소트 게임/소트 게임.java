@@ -54,10 +54,8 @@ public class Main{
 	                queue.add(new Node(reversed, node.cnt + 1));
 	            }
 	        }
-	    }
-	    
-	    System.out.println(-1);
-	    
+	    }	    
+	    System.out.println(-1);	    
     }
     
     private static boolean isCrescendo(int num){
@@ -72,16 +70,8 @@ public class Main{
         }
         return true;
     }
-    
-    private static List<Integer> change(int num){
-        List<Integer> nums = String.valueOf(num).chars().mapToObj(Character::getNumericValue)
-            .collect(Collectors.toList());
-    
-        return nums;
-    }
-    
+
     private static int reverse(int num, int idx){
-        List<Integer> nums = change(num);
         int start = N - idx -1;
         int end = N - (idx + K) ;
 
