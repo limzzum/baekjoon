@@ -1,11 +1,13 @@
 import java.util.*;
 import java.io.*;
+import java.util.stream.*;
 
 public class Main{
     
     static int[][] map;
 	public static void main(String[] args) throws Exception{
 	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    PriorityQueue<Integer> queue = new PriorityQueue();
 	    StringTokenizer st;
 	    int N = Integer.parseInt(br.readLine());
 	    
@@ -18,23 +20,21 @@ public class Main{
 	        }
 	    }
 	    
-	    List<Integer> nums = new ArrayList();
 	    for(int i=0; i<N; i++){
-	        nums.add(map[N-1][i]);
+	        queue.add(map[N-1][i]);
 	    }
-	    Collections.sort(nums);
-	    
+
 	    for(int i=0; i<N; i++){
 	        for(int j=N-2; j>=0; j--){
-	            if(map[j][i] > nums.get(0)){
-	                nums.set(0, map[j][i]);
-	                Collections.sort(nums);
+	            if(map[j][i] > queue.peek()){
+	               queue.poll();
+	               queue.add(map[j][i]);
 	            }else{
 	                break;
 	            }
 	        }
 	    }
 	    
-	    System.out.println(nums.get(0));
+	    System.out.println(queue.peek());
 	}
 }
