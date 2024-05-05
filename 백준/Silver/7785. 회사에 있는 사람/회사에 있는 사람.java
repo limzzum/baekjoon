@@ -21,7 +21,8 @@ public class Main{
                 names.remove(name);
             }
         }
-        
-        names.stream().sorted(Comparator.comparing((String a) -> a).reversed()).forEach(System.out::println);
+        StringBuilder sb = new StringBuilder();
+        names.stream().sorted(Comparator.comparing((String a) -> a).reversed()).forEach((a)-> sb.append(a).append("\n"));
+	    System.out.println(sb);
 	}
 }
