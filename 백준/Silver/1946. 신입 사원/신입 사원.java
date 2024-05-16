@@ -1,37 +1,52 @@
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
 
-public class Main {
-    public static void main(String[]args){
-        Scanner scan = new Scanner(System.in);
-
-        int n= scan.nextInt();
-
-        for(int i=0;i<n;i++){
-            int m=scan.nextInt();
-            int count=1;
-            int work[]=new int[m+1];
-            for(int j=0;j<m;j++){
-                int a=scan.nextInt();
-                int b=scan.nextInt();
-                work[a]=b;
-            }
-
-            int vot= work[1];
-
-            for(int j=2;j<=m;j++){
-                if(work[j]<vot){
-                    vot=work[j];
-                    count++;
-
-                }
-            }
-            System.out.println(count);
-
-
-
+public class Main{
+    
+    static class Baeksoo{
+        int specRank;
+        int speekRank;
+        
+        public Baeksoo(int specRank, int speekRank){
+            this.specRank = specRank;
+            this.speekRank = speekRank;
         }
-        scan.close();
     }
+    
+    static int T, N;
+    static int highRank;
+    static int answer;
+    static List<Baeksoo> baeksoos = new ArrayList<>();
+    
+	public static void main(String[] args) throws Exception{
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	    BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+	    T = Integer.parseInt(br.readLine());
+	    
+	    StringTokenizer st;
+	    for(int t=0; t<T; t++){
+	        N = Integer.parseInt(br.readLine());
+	        baeksoos = new ArrayList<>();
+	        answer = 0;
+	        highRank = N+1;
+	        for(int i=0; i<N; i++){
+	            st = new StringTokenizer(br.readLine());
+	            baeksoos.add(new Baeksoo(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken())));
+	        }
+	        
+	        baeksoos.sort(Comparator.comparing(a-> a.specRank));
+	    
+	        for(Baeksoo baeksoo : baeksoos){
+	            if(baeksoo.speekRank < highRank){
+	                highRank = baeksoo.speekRank;
+	                answer += 1;
+	            }
+	        }
+	        bw.write(answer+"\n");
+	    }
+	    
+	    bw.flush();
+	    bw.close();
+	}
 }
