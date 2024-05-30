@@ -1,59 +1,57 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.*;
+import java.io.*;
+import java.util.stream.*;
 
-public class Main {
+public class Main{
+    
+    static final int[] row = {0, -1, 0, 1};
+    static final int[] col = {-1, 0, 1, 0};
     static int N;
-    static int [][] map;
-    static int [] row = {0,-1,0,1};;
-    static int [] col = {-1, 0, 1, 0};
-    public static void main(String[] args) throws Exception{
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        Queue<int[]> qp = new LinkedList<>();
+    static char[][] map;
+    static List<Integer> groupCnt = new ArrayList<>();
+    static int cnt;
+    
+	public static void main(String[] args) throws Exception{
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
-
-        map = new int[N][N];
-        for (int i = 0; i<N; i++){
-            String[] line = br.readLine().split("");
-            for(int j = 0; j<N; j++){
-                int num = Integer.parseInt(line[j]);
-                if(num == 1){
-                    map[i][j] = num;
-                    qp.add(new int[]{i,j});
+        map = new char[N][N];
+        
+        for(int i=0; i<N; i++){
+            map[i] = br.readLine().toCharArray();
+        }
+        
+        for(int i=0; i<N; i++){
+            for(int j=0; j<N; j++){
+                if(map[i][j] == '1'){
+                    cnt = 0;
+                    dfs(i, j);
+                    groupCnt.add(cnt);
                 }
             }
         }
-
-        List<Integer> answer = new ArrayList<>();
-        while(!qp.isEmpty()){
-            int count = 1;
-            int[] position = qp.poll();
-            if(map[position[0]][position[1]]== 1) {
-                map[position[0]][position[1]]=0;
-                count = dfs( count, position);
-                answer.add(count);
-            }
-        }
-
-        Collections.sort(answer);
-        System.out.println(answer.size());
-        for (Integer integer : answer) {
-            System.out.println(integer);
-        }
-    }
-
-    private static int dfs( int count, int[] position) {
-        for (int i=0; i<4; i++){
-            int r = position[0]+ row[i];
-            int c = position[1]+ col[i];
-            if(r>=0 && r< N && c>=0 && c< N){
-                if(map[r][c]==1){
-                    count += 1;
-                    map[r][c] = 0;
-                    count = dfs(count, new int[]{r,c});
-                }
-            }
-        }
-        return count;
-    }
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append(groupCnt.size()).append("\n");
+        groupCnt.stream().sorted(Comparator.comparing(a-> a)).forEach(a -> sb.append(a).append("\n"));
+        System.out.print(sb);
+        
+	}
+	
+	private static void dfs(int r, int c){
+	    map[r][c] = '0';
+	    cnt += 1;
+	    
+	    for(int i=0; i<4; i++){
+	        int nr = r + row[i];
+	        int nc = c + col[i];
+	        
+	        if(nr < 0 || nr >= N || nc < 0 || nc >= N){
+	            continue;
+	        }
+	        
+	        if(map[nr][nc] == '1'){
+	            dfs(nr, nc);
+	        }
+	    }
+	}
 }
