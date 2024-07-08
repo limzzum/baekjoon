@@ -39,7 +39,7 @@ public class Main{
 	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	    StringTokenizer st = new StringTokenizer(br.readLine());
 	    N = Integer.parseInt(st.nextToken());
-	    K = Math.min(3000, Integer.parseInt(st.nextToken()));
+	    K = Math.min(1000, Integer.parseInt(st.nextToken()));
 	    
 	    directions = br.readLine().toCharArray();
 	    
