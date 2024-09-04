@@ -2,33 +2,25 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+
+    static int N;
+    static int[][] sum;
+    static int answer;
+
+    public static void main(String[] args) throws Exception{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int N = Integer.parseInt(br.readLine());
-        int[] nums = new int[N];
-        int[] dp = new int[N];
+        N = Integer.parseInt(br.readLine());
+        sum = new int[N+1][3];
 
-        for (int i=0; i<N; i++){
-            nums[i] = Integer.parseInt(br.readLine());
-        }
-        
-        if(N<3){
-            int sum = 0;
-            for(int i= 0; i<N; i++){
-                sum += nums[i];
-            }
-            System.out.println(sum);
-            return;
+        int n;
+        for(int i=1; i<=N; i++){
+            n = Integer.parseInt(br.readLine());
+            sum[i][0] = Math.max(sum[i-1][2], Math.max(sum[i-1][0], sum[i-1][1]));
+            sum[i][1] = sum[i-1][0] + n;
+            sum[i][2] = sum[i-1][1] + n;
         }
 
-        dp[0] = nums[0];
-        dp[1] = nums[0] +nums[1];
-        dp[2] = Math.max(nums[2]+nums[1], Math.max(dp[1], nums[0]+nums[2]));
-        for(int i=3; i<N; i++){
-           dp[i] = Math.max(nums[i]+nums[i-1]+dp[i-3], nums[i]+dp[i-2]);
-           dp[i] = Math.max(dp[i], dp[i-1]);
-        }
-        System.out.println(dp[N-1]);
+        System.out.println(Math.max(sum[N][0], Math.max(sum[N][1], sum[N][2])));
     }
 
 }
