@@ -25,11 +25,7 @@ class Solution {
                 answerIndexs.add(i+1);
             }
         }
-        int[] answer = new int[answerIndexs.size()];
-        for(int i=0; i<answer.length; i++){
-            answer[i] = answerIndexs.get(i);
-        }
-        return answer;
+        return answerIndexs.stream().mapToInt(x-> x).toArray();
     }
     
     private int getDateValue(String date){
