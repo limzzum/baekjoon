@@ -23,9 +23,9 @@ class Solution {
             answer(selected);
             return;
         }
-        // if(idx == 0 && start > dices.length/2){
-        //     return;
-        // }
+        if(idx == 0 && start >= dices.length/2){
+            return;
+        }
         for(int i=start; i<dices.length; i++){
             if(isSelected[i]){
                 continue;
@@ -49,22 +49,6 @@ class Solution {
             }
         }
         calSum(0, selected, unSelected, 0, 0);
-        
-        // for(int i=0; i<Math.pow(6, selected.length); i++){
-        //     int aSum = 0;
-        //     int bSum = 0;
-        //     for(int j=0; j<selected.length; j++){
-        //         if(j == selected.length -1){
-        //             idx = i % 6;
-        //         }else {
-        //             idx = i/ (6*(selected.length-j-1));
-        //         }
-        //         aSum += dices[selected[j]][idx];
-        //         bSum += dices[unSelected[j]][idx];
-        //     }
-        //     aSums.add(aSum);
-        //     bSums.add(bSum);
-        // }
 
         aSums.sort(Comparator.comparing(a -> a));
         bSums.sort(Comparator.comparing(a -> a));
@@ -88,10 +72,6 @@ class Solution {
         if(idx == selected.length){
             aSums.add(aSum);
             bSums.add(bSum);
-            
-            // System.out.println("selected : "+ Arrays.toString(selected)+" aSum : "+ aSum+" bSum : "+ bSum);
-            //             System.out.println("unSelected : "+ Arrays.toString(unSelected)+" aSum : "+ aSum+" bSum : "+ bSum);
-
             return;
         }
         for(int i=0; i<6; i++){
